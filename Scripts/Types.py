@@ -1,13 +1,14 @@
 class PokType:
 
     name:" "
-    pokemonOfThisType= []
 
 
-    def __init__(self,name):
+    def __init__(self,name,debilitiesATK= [],strengthATK= [],noDamageTo= [],pokemonOfThisType= []):
 
         self.name = name
+        self.debilitiesATK =debilitiesATK
+        self.strengthATK =strengthATK
+        self.noDamageTo = noDamageTo
+        self.pokemonOfThisType = pokemonOfThisType
 
-    def assignPokemon(self,a):
-        self.pokemonOfThisType.append(a)
         
