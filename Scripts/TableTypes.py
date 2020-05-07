@@ -10,7 +10,7 @@ driver = webdriver.Firefox(firefox_binary=binary,executable_path="C:/geckodriver
 
 
 def createTablePokemonTypes():
-    tableTypePokemons = []
+    tableTypePokemons = [[]]
     driver.get("http://pokemon-index.com/type") 
     typeNumber = driver.find_elements_by_css_selector("table.type-chart > tbody > tr")
     typeNumber = len(typeNumber)-2
@@ -21,8 +21,9 @@ def createTablePokemonTypes():
         tableTypePokemons.append(typeAux)
     
 
-
     return tableTypePokemons
+
+print(createTablePokemonTypes())
 
 def assingPrpertiesToTypes(table):
     driver.get("http://pokemon-index.com/type") 
