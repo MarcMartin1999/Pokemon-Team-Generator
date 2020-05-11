@@ -10,52 +10,86 @@ driver = webdriver.Firefox(firefox_binary=binary,executable_path="C:/geckodriver
 
 
 def createTablePokemonTypes():
-    tableTypePokemons = [[]]
+    tableTypePokemons = []
     driver.get("http://pokemon-index.com/type") 
     typeNumber = driver.find_elements_by_css_selector("table.type-chart > tbody > tr")
     typeNumber = len(typeNumber)-2
     
     for x in range(typeNumber) :
+        tableAux =[]
+        tableAux2 =[]
         pokemonsType = driver.find_element_by_xpath("/html/body/div[4]/div[2]/div[5]/table[2]/tbody/tr["+str(x+2)+"]/td[1]").text
-        typeAux =  PokType(pokemonsType)
+        typeAux =  PokType(pokemonsType,tableAux,tableAux2)
         tableTypePokemons.append(typeAux)
     
 
     return tableTypePokemons
 
-print(createTablePokemonTypes())
 
 def assingPrpertiesToTypes(table):
     driver.get("http://pokemon-index.com/type") 
     typeNumber = driver.find_elements_by_css_selector("table.type-chart > tbody > tr")
     typeNumber = len(typeNumber)-2
-
     driver.get("https://pokemondb.net/type")
     for y in range(typeNumber) :
-
+        
         for x in range(typeNumber) :
             
-            aux = driver.find_element_by_xpath("/html/body/main/div[2]/div[2]/div/table/tbody/tr["+str(y+1)+"]/td["+str(x+1)+"]")
+            aux = driver.find_element_by_xpath("/html/body/main/div[2]/div[2]/div/table/tbody/tr["+str(x+1)+"]/td["+str(y+1)+"]")
             aux = aux.get_attribute("class")
-            
-            if aux == "type-fx-cell type-fx-50":
-                table[y].debilitiesATK.append(x)
-            
-            if aux =="type-fx-cell type-fx-0":
-                table[y].noDamageTo.append(x)
-            
-            if aux =="type-fx-cell type-fx-200":
-                table[y].strengthATK.append(x)
+                
+            if aux == "type-fx-cell type-fx-200":
+                    
+                table[y].debilities.append(x)
 
 
 
 
-def organizeTypePokemons(tablePokemon,tableTypes,numOfType):
+
+def organizeTypePokemons(tableTypes,tablePokemon):
     
-    auxTable = []
-        
-    for y in range(len(tablePokemon)):
+    for x in range(len(tablePokemon))     :
+    
+        for y in range(len(tableTypes)):
 
-        if str.upper(tablePokemon[y].pokemonType1) ==str.upper(tableTypes[numOfType].name) or str.upper(tablePokemon[y].pokemonType2) ==str.upper(tableTypes[numOfType].name):
+            if str.upper(tablePokemon[x].pokemonType1) ==str.upper(tableTypes[y].name) or str.upper(tablePokemon[x].pokemonType2) ==str.upper(tableTypes[y].name):
 
-            auxTable.append(y)
+                tableTypes[y].pokemonOfThysType.append(x)
+
+
+
+
+def pokemonListReturner():
+
+   driver.get("https://pokemondb.net/pokedex/national") 
+
+   pokemonsName = driver.find_elements_by_class_name("ent-name")
+
+   pokemonsTypeContainer =driver.find_elements_by_class_name("infocard")  
+
+   pokemonList = []
+
+
+   for x in range(len(pokemonsName)):
+         
+      
+      pokemonAuxType = pokemonsTypeContainer[x].find_elements_by_css_selector("small>a")
+         
+      if len(pokemonAuxType)  == 2:
+
+         type1= pokemonAuxType[1].text
+         type2= pokemonAuxType[0].text
+         name = pokemonsName[x].text
+
+         pokemonAux = PokemonObject(name,type1,type2)
+         pokemonList.append(pokemonAux)  
+      
+      if len(pokemonAuxType)  == 1:
+
+         type1= pokemonAuxType[0].text
+         name = pokemonsName[x].text
+
+         pokemonAux = PokemonObject(name,type1)
+         pokemonList.append(pokemonAux)
+
+   return pokemonList
