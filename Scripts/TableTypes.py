@@ -61,35 +61,38 @@ def organizeTypePokemons(tableTypes,tablePokemon):
 
 def pokemonListReturner():
 
-   driver.get("https://pokemondb.net/pokedex/national") 
+    
 
-   pokemonsName = driver.find_elements_by_class_name("ent-name")
+    driver.get("https://pokemondb.net/pokedex/national") 
 
-   pokemonsTypeContainer =driver.find_elements_by_class_name("infocard")  
+    pokemonsName = driver.find_elements_by_class_name("ent-name")  
+    pokemonsTypeContainer = driver.find_elements_by_class_name("infocard")  
+    pokemonList = []
 
-   pokemonList = []
+
+    for x in range(len(pokemonsName)):
+            
+        
+        pokemonAuxType = pokemonsTypeContainer[x].find_elements_by_css_selector("small>a")
+            
+        if len(pokemonAuxType)  == 2:
+
+            type1= pokemonAuxType[1].text
+            type2= pokemonAuxType[0].text
+            name = pokemonsName[x].text
+
+            pokemonAux = PokemonObject(name,"pokemonImage",type1,type2)
+            pokemonList.append(pokemonAux)  
+        
+        if len(pokemonAuxType)  == 1:
+
+            type1= pokemonAuxType[0].text
+            name = pokemonsName[x].text
+
+            pokemonAux = PokemonObject(name,"pokemonImage",type1)
+            pokemonList.append(pokemonAux)
 
 
-   for x in range(len(pokemonsName)):
-         
-      
-      pokemonAuxType = pokemonsTypeContainer[x].find_elements_by_css_selector("small>a")
-         
-      if len(pokemonAuxType)  == 2:
 
-         type1= pokemonAuxType[1].text
-         type2= pokemonAuxType[0].text
-         name = pokemonsName[x].text
+    return pokemonList
 
-         pokemonAux = PokemonObject(name,type1,type2)
-         pokemonList.append(pokemonAux)  
-      
-      if len(pokemonAuxType)  == 1:
-
-         type1= pokemonAuxType[0].text
-         name = pokemonsName[x].text
-
-         pokemonAux = PokemonObject(name,type1)
-         pokemonList.append(pokemonAux)
-
-   return pokemonList
