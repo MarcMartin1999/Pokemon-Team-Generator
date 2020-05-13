@@ -7,8 +7,6 @@ from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 binary = FirefoxBinary("C:/Program Files/Mozilla Firefox/firefox.exe")
 driver = webdriver.Firefox(firefox_binary=binary,executable_path="C:/geckodriver.exe")
 
-
-
 def createTablePokemonTypes():
     tableTypePokemons = []
     driver.get("http://pokemon-index.com/type") 
@@ -24,7 +22,6 @@ def createTablePokemonTypes():
     
 
     return tableTypePokemons
-
 
 def assingPrpertiesToTypes(table):
     driver.get("http://pokemon-index.com/type") 
@@ -42,13 +39,9 @@ def assingPrpertiesToTypes(table):
                     
                 table[y].debilities.append(x)
 
-
-
-
-
 def organizeTypePokemons(tableTypes,tablePokemon):
     
-    for x in range(len(tablePokemon))     :
+    for x in range(len(tablePokemon)):
     
         for y in range(len(tableTypes)):
 
@@ -57,22 +50,16 @@ def organizeTypePokemons(tableTypes,tablePokemon):
                 tableTypes[y].pokemonOfThysType.append(x)
 
 
-
-
 def pokemonListReturner():
 
-    
-
     driver.get("https://pokemondb.net/pokedex/national") 
-
     pokemonsName = driver.find_elements_by_class_name("ent-name")  
     pokemonsTypeContainer = driver.find_elements_by_class_name("infocard")  
     pokemonList = []
 
 
     for x in range(len(pokemonsName)):
-            
-        
+               
         pokemonAuxType = pokemonsTypeContainer[x].find_elements_by_css_selector("small>a")
             
         if len(pokemonAuxType)  == 2:
@@ -91,8 +78,6 @@ def pokemonListReturner():
 
             pokemonAux = PokemonObject(name,"pokemonImage",type1)
             pokemonList.append(pokemonAux)
-
-
 
     return pokemonList
 

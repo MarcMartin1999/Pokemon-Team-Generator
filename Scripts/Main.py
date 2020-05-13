@@ -7,7 +7,6 @@ import os
 
 binary = FirefoxBinary("C:/Program Files/Mozilla Firefox/firefox.exe")
 browser = webdriver.Firefox(firefox_binary=binary,executable_path="C:/geckodriver.exe")
-
 pokemonList = pokemonListReturner()
 tableTypes = createTablePokemonTypes()
 assingPrpertiesToTypes(tableTypes)
@@ -15,7 +14,7 @@ organizeTypePokemons(tableTypes,pokemonList)
 
 def mainProgram():
     pokemonTeam =  []
-    typeRequired = input("Wich type of pokemon you want to figth against?")
+    typeRequired = input("Wich type of pokemon you want to figth against?  ")
 
     typeRequired =  str.upper(typeRequired)
     for x in range(len(tableTypes)) :
@@ -33,14 +32,14 @@ def mainProgram():
             html_file = os.getcwd() + "\\" + "Scripts\\Web\\webTemplate.html"
             browser.get("file:///" + html_file)
                 
-    if  input("Try another type?(y/n)" ) == "y" or input("Try another type?(y/n)" )== "Y" :
+    if  input("Try another type?(y/n)" ) == "y" or input("Try another type?(y/n)  " )== "Y" :
         mainProgram()
 
 
 def createWeb(Team,Images):
     html_file = os.getcwd() + "\\" + "Scripts\\Web\\webTemplate.html"
     web = open(html_file, "w")
-    web.write('''<!doctype html>n
+    web.write('''<!doctype html>
 
     <html lang="en">
     <head>
@@ -56,23 +55,36 @@ def createWeb(Team,Images):
     </head>
 
     <body>
-    <img src="Title.png" >
+        <div class="container">
+            <img class= imageTitle src="Title.png" > </br>
 
-
-    <p class="pokemonName">'''+Team[0].name+'''</p>
-    <img  src="'''+Images[0]+'''" class="pokemonImage" >
-    <p class="pokemonName">'''+Team[1].name+'''</p>
-    <img src="'''+Images[1]+'''" class="pokemonImage" >
-    <p class="pokemonName">'''+Team[2].name+'''</p>
-    <img src="'''+Images[2]+'''" class="pokemonImage" >
-    <p class="pokemonName">'''+Team[3].name+'''</p>
-    <img src="'''+Images[3]+'''" class="pokemonImage" >
-    <p class="pokemonName">'''+Team[4].name+'''</p>
-    <img src="'''+Images[4]+'''" class="pokemonImage" >
-    <p class="pokemonName">'''+Team[5].name+'''</p>
-    <img src="'''+Images[5]+'''" class="pokemonImage" >
-    
-    
+            <div class= "pokemonContainer"> 
+                <p class="pokemonName">'''+Team[0].name+'''</p></br>
+                <img  src='''+Images[0]+''' class="pokemonImage" >
+            </div>
+        
+            <div class= "pokemonContainer"> 
+                <p class="pokemonName">'''+Team[1].name+'''</p></br>
+                <img src='''+Images[1]+''' class="pokemonImage" >
+            </div>
+            <div class= "pokemonContainer"> 
+                <p class="pokemonName">'''+Team[2].name+'''</p></br>
+                <img src='''+Images[2]+''' class="pokemonImage" >
+            </div>
+            <div class= "pokemonContainer"> 
+                <p class="pokemonName">'''+Team[3].name+'''</p></br>
+                <img src='''+Images[3]+''' class="pokemonImage" >
+            </div>
+            <div class= "pokemonContainer"> 
+                <p class="pokemonName">'''+Team[4].name+'''</p></br>
+                <img src='''+Images[4]+''' class="pokemonImage" >
+            </div>
+            <div class= "pokemonContainer"> 
+                <p class="pokemonName">'''+Team[5].name+'''</p></br>
+                <img src='''+Images[5]+''' class="pokemonImage" >
+            </div>
+        
+        </div>
     </body>
     </html>''')
     web.close()
@@ -86,10 +98,6 @@ def searchImageTeam(Team):
     
     return images
         
-
-
-
-
 mainProgram()
     
    
